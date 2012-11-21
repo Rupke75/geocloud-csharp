@@ -1,0 +1,39 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Geodan.Cloud.Api", "Geodan.Cloud.Api\Geodan.Cloud.Api.csproj", "{CBC0EBB6-63CC-4589-825E-F91EB421D7C7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RestSharp", "RestSharp\RestSharp.csproj", "{FF9AD615-44B1-417F-A30A-6E155D724ADB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Geodan.Cloud.Api.Tests", "Geodan.Cloud.Api.Tests\Geodan.Cloud.Api.Tests.csproj", "{445525FB-976D-4AC4-81AE-9AC9D08290F9}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{13F73DCB-B940-4124-B321-3F1F2972FF1C}"
+	ProjectSection(SolutionItems) = preProject
+		.nuget\NuGet.Config = .nuget\NuGet.Config
+		.nuget\NuGet.exe = .nuget\NuGet.exe
+		.nuget\NuGet.targets = .nuget\NuGet.targets
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{CBC0EBB6-63CC-4589-825E-F91EB421D7C7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CBC0EBB6-63CC-4589-825E-F91EB421D7C7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CBC0EBB6-63CC-4589-825E-F91EB421D7C7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CBC0EBB6-63CC-4589-825E-F91EB421D7C7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FF9AD615-44B1-417F-A30A-6E155D724ADB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FF9AD615-44B1-417F-A30A-6E155D724ADB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FF9AD615-44B1-417F-A30A-6E155D724ADB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FF9AD615-44B1-417F-A30A-6E155D724ADB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{445525FB-976D-4AC4-81AE-9AC9D08290F9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{445525FB-976D-4AC4-81AE-9AC9D08290F9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{445525FB-976D-4AC4-81AE-9AC9D08290F9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{445525FB-976D-4AC4-81AE-9AC9D08290F9}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

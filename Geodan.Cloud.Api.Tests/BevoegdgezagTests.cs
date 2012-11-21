@@ -1,0 +1,28 @@
+﻿using System.Collections.Generic;
+using Geodan.Cloud.Api.Models;
+using Xunit;
+
+namespace Geodan.Cloud.Api.Tests
+{
+    public class Tests
+    {
+        [Fact]
+        public void GetBevoegdgezagByLatLon()
+        {
+            // arrange
+            RegiosApi.GetBevoegdgezag(4.9128153,52.3423183,callback);
+        }
+
+        [Fact]
+        public void GetBevoegdgezagByRd()
+        {
+            // arrange
+            RegiosApi.GetBevoegdgezag("POINT(208501.1 603036.6)", callback);
+        }
+
+        private static void callback(List<Bevoegdgezag> bevoegdgezagen)
+        {
+            Assert.True(bevoegdgezagen.Count > 0);
+        }
+    }
+}
