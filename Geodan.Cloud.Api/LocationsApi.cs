@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using Geodan.Cloud.Models.Locations;
+using Geodan.Cloud.Models.Location;
 using RestSharp;
 
 namespace Geodan.Cloud.Api

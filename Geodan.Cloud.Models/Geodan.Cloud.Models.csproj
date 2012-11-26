@@ -41,7 +41,11 @@
     <Compile Include="Agn\Bevoegdgezag.cs" />
     <Compile Include="Agn\Gebouw.cs" />
     <Compile Include="Link.cs" />
-    <Compile Include="Locations\Position.cs" />
+    <Compile Include="Location\Organisation.cs" />
+    <Compile Include="Location\Position.cs" />
+    <Compile Include="Location\Roles.cs" />
+    <Compile Include="Location\Trackee.cs" />
+    <Compile Include="Location\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />

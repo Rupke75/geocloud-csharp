@@ -32,6 +32,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Geodan.Cloud.Models, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Geodan.Cloud.Models.1.0.4\lib\Geodan.Cloud.Models.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -65,10 +69,6 @@
     <ProjectReference Include="..\Geodan.Cloud.Api\Geodan.Cloud.Api.csproj">
       <Project>{cbc0ebb6-63cc-4589-825e-f91eb421d7c7}</Project>
       <Name>Geodan.Cloud.Api</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Geodan.Cloud.Models\Geodan.Cloud.Models.csproj">
-      <Project>{001e9553-6d9e-4766-8c11-3a1d19e8e549}</Project>
-      <Name>Geodan.Cloud.Models</Name>
     </ProjectReference>
     <ProjectReference Include="..\RestSharp\RestSharp.csproj">
       <Project>{ff9ad615-44b1-417f-a30a-6e155d724adb}</Project>
