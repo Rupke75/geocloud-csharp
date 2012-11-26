@@ -29,6 +29,6 @@ namespace Geodan.Cloud.Models.Agn
         public string GeometrieRD { get; set; }
         public string GebwBagID { get; set; }
         public string DataExtractDate { get; set; }
-
+        public Link Gebouw { get; set; }
     }
 }
