@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
-using System.Text;
+﻿using System.Globalization;
 
-namespace Geodan.Cloud.Api.Models
+namespace Geodan.Cloud.Models.Agn
 {
     public class Bevoegdgezag
     {
@@ -12,6 +8,7 @@ namespace Geodan.Cloud.Api.Models
         public string Name { get; set; }
         public string Wkt { set; get; }
         public string Theme { get; set; }
+
 
         public Link Link
         {

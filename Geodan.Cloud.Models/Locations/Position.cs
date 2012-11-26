@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Geodan.Cloud.Api.Models
+namespace Geodan.Cloud.Models.Locations
 {
     public class Position
     {

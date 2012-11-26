@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using Geodan.Cloud.Api.Models;
+using Geodan.Cloud.Models.Locations;
 using Xunit;
 
 namespace Geodan.Cloud.Api.Tests
@@ -23,8 +23,6 @@ namespace Geodan.Cloud.Api.Tests
         {
             Assert.True(positions.Count > 0);
         }
-
-
 
     }
 }

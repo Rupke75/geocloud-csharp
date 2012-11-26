@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using Geodan.Cloud.Api.Models;
+using Geodan.Cloud.Models.Agn;
 using Xunit;
 
 namespace Geodan.Cloud.Api.Tests
