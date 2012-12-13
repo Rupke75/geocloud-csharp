@@ -7,7 +7,7 @@ namespace Geodan.Cloud.Api
 {
     public class AgnApi
     {
-        public static string BaseUrl = "http://wingis/agn/api";
+        public static string BaseUrl = "http://services.geodan.nl/data/agn";
         public static string UserId = string.Empty;
 
         static readonly RestClient Client = new RestClient(BaseUrl);
