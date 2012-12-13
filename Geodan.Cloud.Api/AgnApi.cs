@@ -28,7 +28,6 @@ namespace Geodan.Cloud.Api
             Client.ExecuteAsync<Gebouw>(request, response => callback(response.Data));
         }
 
-
         public static void GetGebouwen(string pc6, Action<List<Gebouw>> callback, string huisnummer = "", string huisletter = "", string huisnummerToevoeging = "")
         {
             var request = new RestRequest("gebouwen");
@@ -40,6 +39,19 @@ namespace Geodan.Cloud.Api
             Client.ExecuteAsync<List<Gebouw>>(request, response => callback(response.Data));
         }
 
+        public static void GetGebouwen(string straat, string woonplaats, Action<List<Gebouw>> callback, string huisnummer = "", string huisletter = "", string huisnummerToevoeging = "")
+        {
+            var request = new RestRequest("gebouwen");
+            request.AddParameter("straat", straat);
+            request.AddParameter("woonplaats", woonplaats);
+
+            if (huisnummer != string.Empty) request.AddParameter("huisnummer", huisnummer);
+            if (huisletter != string.Empty) request.AddParameter("huisletter", huisletter);
+            if (huisnummerToevoeging != string.Empty) request.AddParameter("huisnrtoev", huisnummerToevoeging);
+
+            if (!string.IsNullOrEmpty(UserId)) request.AddParameter("uid", UserId);
+            Client.ExecuteAsync<List<Gebouw>>(request, response => callback(response.Data));
+        }
 
         public static void GetAdres(string id, Action<Adres> callback)
         {
@@ -60,6 +72,21 @@ namespace Geodan.Cloud.Api
             if (!string.IsNullOrEmpty(UserId)) request.AddParameter("uid", UserId);
             Client.ExecuteAsync<List<Adres>>(request, response => callback(response.Data));
         }
+
+        public static void GetAdressen(string straat, string woonplaats, Action<List<Adres>> callback, string huisnummer = "", string huisletter = "", string huisnummerToevoeging = "")
+        {
+            var request = new RestRequest("adressen");
+            request.AddParameter("straat", straat);
+            request.AddParameter("woonplaats", woonplaats);
+
+            if (huisnummer != string.Empty) request.AddParameter("huisnummer", huisnummer);
+            if (huisletter != string.Empty) request.AddParameter("huisletter", huisletter);
+            if (huisnummerToevoeging != string.Empty) request.AddParameter("huisnrtoev", huisnummerToevoeging);
+
+            if (!string.IsNullOrEmpty(UserId)) request.AddParameter("uid", UserId);
+            Client.ExecuteAsync<List<Adres>>(request, response => callback(response.Data));
+        }
+
 
     }
 }

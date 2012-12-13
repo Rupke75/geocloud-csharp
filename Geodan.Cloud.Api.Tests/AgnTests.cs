@@ -18,14 +18,31 @@ namespace Geodan.Cloud.Api.Tests
             AgnApi.GetGebouwen("3583", callback);
         }
 
-        private static void callback(Adres adres)
+        [Fact]
+        public void GetGebouwenByStraatGemeente()
         {
-            Assert.True(adres != null);
+            AgnApi.GetGebouwen("Parkstraat","Utrecht",callback);
+        }
+
+        [Fact]
+        public void GetAdressenByStraatGemeente()
+        {
+            AgnApi.GetAdressen("Parkstraat", "Utrecht", callback);
         }
 
         private static void callback(List<Gebouw> gebouwen)
         {
             Assert.True(gebouwen.Count >0 );
+        }
+
+        private static void callback(Adres adres)
+        {
+            Assert.True(adres != null);
+        }
+
+        private static void callback(List<Adres> adressen)
+        {
+            Assert.True(adressen.Count > 0);
         }
     }
 }
