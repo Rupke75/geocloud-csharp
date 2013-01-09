@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
+﻿using System.Collections.Generic;
 namespace Geodan.Cloud.Models.Agn
 {
     public class Adres
@@ -30,6 +26,6 @@ namespace Geodan.Cloud.Models.Agn
         public string GebwBagID { get; set; }
         public string DataExtractDate { get; set; }
         public Link Gebouw { get; set; }
-        public List<String> Gebruiksdoelen { get; set; }
+        public List<Gebruiksdoel> Gebruiksdoelen { get; set; }
     }
 }

@@ -40,6 +40,7 @@
     <Compile Include="Agn\Adres.cs" />
     <Compile Include="Agn\Bevoegdgezag.cs" />
     <Compile Include="Agn\Gebouw.cs" />
+    <Compile Include="Agn\Gebruiksdoel.cs" />
     <Compile Include="Link.cs" />
     <Compile Include="Location\Organisation.cs" />
     <Compile Include="Location\Position.cs" />
