@@ -1,36 +1,41 @@
 ﻿using System;
 using System.Collections.Generic;
 using Geodan.Cloud.Models.Location;
-using RestSharp;
+using System.Net.Http;
+using System.Runtime.Serialization.Json;
+using Newtonsoft.Json;
 
 namespace Geodan.Cloud.Api
 {
     public class LocationsApi
     {
-        public static string BaseUrl = "http://wingis/location/api";
-        public static string UserId = string.Empty;
+        public string BaseUrl = "http://wingis/location/api";
+        public string UserId = string.Empty;
 
-        static readonly RestClient Client = new RestClient(BaseUrl);
-
-        public static void GetLocations(string username, Action<List<Position>> callback)
+        public List<Position> GetLocations(string username)
         {
-            var request = new RestRequest("positions");
-            request.AddParameter("username", username);
-            if (!string.IsNullOrEmpty(UserId)) request.AddParameter("uid", UserId);
-            Client.ExecuteAsync<List<Position>>(request, response => callback(response.Data));
+            var client = new HttpClient();
+            client.BaseAddress = new Uri(BaseUrl);
+            var url = "positions?username=" + username;
+            if (!string.IsNullOrEmpty(UserId)) url += "&uid" + UserId;
+
+            var response = client.GetAsync(url).Result;
+            var positionString = response.Content.ReadAsStringAsync().Result;
+            var positions = JsonConvert.DeserializeObject<List<Position>>(positionString);
+            return positions;
         }
 
-        public static void GetTrail(string username, string trackeename, DateTime startTime, DateTime endTime, Action<List<Position>> callback)
+        public List<Position> GetTrail(string username, string trackeename, DateTime startTime, DateTime endTime)
         {
-            var request = new RestRequest("trail");
-            request.AddParameter("username", username);
-            request.AddParameter("trackeename", trackeename);
-            request.AddParameter("starttime", startTime);
-            request.AddParameter("endTime", endTime);
-            if (!string.IsNullOrEmpty(UserId)) request.AddParameter("uid", UserId);
-            Client.ExecuteAsync<List<Position>>(request, response => callback(response.Data));
+            var client = new HttpClient();
+            client.BaseAddress = new Uri(BaseUrl);
+            var url = String.Format("trail?username={0}&trackeeName={1}&startTime={2}&endTime={3}",username,trackeename, startTime,endTime);
+            if (!string.IsNullOrEmpty(UserId)) url += "&uid" + UserId;
+
+            var response = client.GetAsync(url).Result;
+            var positionString = response.Content.ReadAsStringAsync().Result;
+            var positions = JsonConvert.DeserializeObject<List<Position>>(positionString);
+            return positions;
         }
-
-
     }
 }

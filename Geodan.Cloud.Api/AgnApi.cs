@@ -1,92 +1,117 @@
 ﻿using System;
 using System.Collections.Generic;
 using Geodan.Cloud.Models.Agn;
-using RestSharp;
+using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Runtime.Serialization.Json;
 
 namespace Geodan.Cloud.Api
 {
     public class AgnApi
     {
-        public static string BaseUrl = "http://services.geodan.nl/data/agn";
-        public static string UserId = string.Empty;
+        public string BaseUrl = "http://services.geodan.nl/data/agn";
+        public string UserId = string.Empty;
 
-        static readonly RestClient Client = new RestClient(BaseUrl);
-
-        public static void GetGebouwen(string wkt, Action<List<Gebouw>> callback)
+        public List<Gebouw> GetGebouwenByWkt(string wkt)
         {
-            var request = new RestRequest("gebouwen");
-            request.AddParameter("wkt", wkt);
-            Client.ExecuteAsync<List<Gebouw>>(request, response => callback(response.Data));
+            var client = new HttpClient();
+            client.BaseAddress = new Uri(BaseUrl);
+            var response = client.GetAsync("gebouwen?wkt=" + wkt).Result;
+            var gebouwenStream = response.Content.ReadAsStreamAsync().Result;
+            var serializer = new DataContractJsonSerializer(typeof(List<Gebouw>));
+            var gebouwen = (List<Gebouw>)serializer.ReadObject(gebouwenStream);
+            return gebouwen;
         }
 
-
-        public static void GetGebouw(string id, Action<Gebouw> callback)
+        public Gebouw GetGebouw(string id)
         {
-            var request = new RestRequest("gebouwen");
-            request.AddParameter(id, ParameterType.UrlSegment);
-            if (!string.IsNullOrEmpty(UserId)) request.AddParameter("uid", UserId);
-            Client.ExecuteAsync<Gebouw>(request, response => callback(response.Data));
+            var client = new HttpClient();
+            client.BaseAddress = new Uri(BaseUrl);
+            var url = "gebouwen/" + id;
+            if (!string.IsNullOrEmpty(UserId)) url += "?uid" + UserId;
+            var response = client.GetAsync(url).Result;
+            var gebouwenStream = response.Content.ReadAsStreamAsync().Result;
+            var serializer = new DataContractJsonSerializer(typeof(Gebouw));
+            var gebouw = (Gebouw)serializer.ReadObject(gebouwenStream);
+            return gebouw;
         }
 
-        public static void GetGebouwen(string pc6, Action<List<Gebouw>> callback, string huisnummer = "", string huisletter = "", string huisnummerToevoeging = "")
+        public List<Gebouw> GetGebouwenByPc6(string pc6, string huisnummer = "", string huisletter = "", string huisnummerToevoeging = "")
         {
-            var request = new RestRequest("gebouwen");
-            request.AddParameter("postcode", pc6);
-            if (huisnummer != string.Empty) request.AddParameter("huisnummer", huisnummer);
-            if (huisletter != string.Empty) request.AddParameter("huisletter", huisletter);
-            if (huisnummerToevoeging != string.Empty) request.AddParameter("huisnrtoev", huisnummerToevoeging);
-            if (!string.IsNullOrEmpty(UserId)) request.AddParameter("uid", UserId);
-            Client.ExecuteAsync<List<Gebouw>>(request, response => callback(response.Data));
+            var client = new HttpClient();
+            client.BaseAddress = new Uri(BaseUrl);
+            var url = String.Format("gebouwen?postcode={0}", pc6);
+            url = AddOptionalParameters(url, huisnummer, huisletter, huisnummerToevoeging, UserId);
+
+            var response = client.GetAsync(url).Result;
+            var gebouwenStream = response.Content.ReadAsStreamAsync().Result;
+            var serializer = new DataContractJsonSerializer(typeof(List<Gebouw>));
+            var gebouwen = (List<Gebouw>)serializer.ReadObject(gebouwenStream);
+            return gebouwen;
         }
 
-        public static void GetGebouwen(string straat, string woonplaats, Action<List<Gebouw>> callback, string huisnummer = "", string huisletter = "", string huisnummerToevoeging = "")
+        public List<Gebouw> GetGebouwen(string straat, string woonplaats, string huisnummer = "", string huisletter = "", string huisnummerToevoeging = "")
         {
-            var request = new RestRequest("gebouwen");
-            request.AddParameter("straat", straat);
-            request.AddParameter("woonplaats", woonplaats);
+            var client = new HttpClient();
+            client.BaseAddress = new Uri(BaseUrl);
+            var url = String.Format("gebouwen?straat={0}&woonplaats={1}", straat, woonplaats);
+            url = AddOptionalParameters(url, huisnummer, huisletter, huisnummerToevoeging, UserId);
 
-            if (huisnummer != string.Empty) request.AddParameter("huisnummer", huisnummer);
-            if (huisletter != string.Empty) request.AddParameter("huisletter", huisletter);
-            if (huisnummerToevoeging != string.Empty) request.AddParameter("huisnrtoev", huisnummerToevoeging);
-
-            if (!string.IsNullOrEmpty(UserId)) request.AddParameter("uid", UserId);
-            Client.ExecuteAsync<List<Gebouw>>(request, response => callback(response.Data));
+            var response = client.GetAsync(url).Result;
+            var gebouwenStream = response.Content.ReadAsStreamAsync().Result;
+            var serializer = new DataContractJsonSerializer(typeof(List<Gebouw>));
+            var gebouwen = (List<Gebouw>)serializer.ReadObject(gebouwenStream);
+            return gebouwen;
         }
 
-        public static void GetAdres(string id, Action<Adres> callback)
+        public Adres GetAdres(string id)
         {
-            var request = new RestRequest("adressen");
-            request.AddParameter(id, ParameterType.UrlSegment);
-            if (!string.IsNullOrEmpty(UserId)) request.AddParameter("uid", UserId);
-            Client.ExecuteAsync<Adres>(request, response => callback(response.Data));
+            var client = new HttpClient();
+            client.BaseAddress = new Uri(BaseUrl);
+            var url = String.Format("adressen/{0}", id);
+            if (!string.IsNullOrEmpty(UserId)) url += "&uid" + UserId;
+
+            var response = client.GetAsync(url).Result;
+            var adressenStream = response.Content.ReadAsStreamAsync().Result;
+            var serializer = new DataContractJsonSerializer(typeof(Adres));
+            var adres = (Adres)serializer.ReadObject(adressenStream);
+            return adres;
         }
 
-
-        public static void GetAdressen(string pc6, Action<List<Adres>> callback, string huisnummer = "", string huisletter = "", string huisnummerToevoeging = "")
+        public List<Adres> GetAdressenByPc6(string pc6, string huisnummer = "", string huisletter = "", string huisnummerToevoeging = "")
         {
-            var request = new RestRequest("adressen");
-            request.AddParameter("postcode", pc6);
-            if (huisnummer != string.Empty) request.AddParameter("huisnummer", huisnummer);
-            if (huisletter != string.Empty) request.AddParameter("huisletter", huisletter);
-            if (huisnummerToevoeging != string.Empty) request.AddParameter("huisnrtoev", huisnummerToevoeging);
-            if (!string.IsNullOrEmpty(UserId)) request.AddParameter("uid", UserId);
-            Client.ExecuteAsync<List<Adres>>(request, response => callback(response.Data));
+            var client = new HttpClient();
+            client.BaseAddress = new Uri(BaseUrl);
+            var url = String.Format("adressen?postcode={0}", pc6);
+            url = AddOptionalParameters(url, huisnummer, huisletter, huisnummerToevoeging, UserId);
+
+            var response = client.GetAsync(url).Result;
+            var adressenStream = response.Content.ReadAsStreamAsync().Result;
+            var serializer = new DataContractJsonSerializer(typeof(List<Adres>));
+            var adressen = (List<Adres>)serializer.ReadObject(adressenStream);
+            return adressen;
         }
 
-        public static void GetAdressen(string straat, string woonplaats, Action<List<Adres>> callback, string huisnummer = "", string huisletter = "", string huisnummerToevoeging = "")
+        public List<Adres> GetAdressen(string straat, string woonplaats, string huisnummer = "", string huisletter = "", string huisnummerToevoeging = "")
         {
-            var request = new RestRequest("adressen");
-            request.AddParameter("straat", straat);
-            request.AddParameter("woonplaats", woonplaats);
-
-            if (huisnummer != string.Empty) request.AddParameter("huisnummer", huisnummer);
-            if (huisletter != string.Empty) request.AddParameter("huisletter", huisletter);
-            if (huisnummerToevoeging != string.Empty) request.AddParameter("huisnrtoev", huisnummerToevoeging);
-
-            if (!string.IsNullOrEmpty(UserId)) request.AddParameter("uid", UserId);
-            Client.ExecuteAsync<List<Adres>>(request, response => callback(response.Data));
+            var client = new HttpClient();
+            client.BaseAddress = new Uri(BaseUrl);
+            var url = String.Format("adressen?straat={0}&woonplaats={1}", straat, woonplaats);
+            url = AddOptionalParameters(url, huisnummer, huisletter, huisnummerToevoeging, UserId);
+            var response = client.GetAsync(url).Result;
+            var adressenStream = response.Content.ReadAsStreamAsync().Result;
+            var serializer = new DataContractJsonSerializer(typeof(List<Adres>));
+            var adressen = (List<Adres>)serializer.ReadObject(adressenStream);
+            return adressen;
         }
 
-
+        private string AddOptionalParameters(string Url, string huisnummer = "", string huisletter = "", string huisnummerToevoeging = "", string UserId = "")
+        {
+            if (huisnummer != string.Empty) Url += "&huisnummer=" + huisnummer;
+            if (huisletter != string.Empty) Url += "&huisletter=" + huisletter;
+            if (huisnummerToevoeging != string.Empty) Url += "&huisnrtoev=" + huisnummerToevoeging;
+            if (!string.IsNullOrEmpty(UserId)) Url += "&uid" + UserId;
+            return Url;
+        }
     }
 }

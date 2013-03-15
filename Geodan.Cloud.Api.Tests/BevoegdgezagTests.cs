@@ -9,18 +9,19 @@ namespace Geodan.Cloud.Api.Tests
         [Fact]
         public void GetBevoegdgezagByLatLon()
         {
-            RegiosApi.GetBevoegdgezag(4.9128153,52.3423183,callback);
+            var regioApi = new RegiosApi();
+            regioApi.BaseUrl = "http://wingis.geodan.nl/regios/api/";
+            var result = regioApi.GetBevoegdgezag(4.9128153, 52.3423183);
+            Assert.True(result.Count > 0);
         }
 
         [Fact]
         public void GetBevoegdgezagByRd()
         {
-            RegiosApi.GetBevoegdgezag("POINT(208501.1 603036.6)", callback);
-        }
-
-        private static void callback(List<Bevoegdgezag> bevoegdgezagen)
-        {
-            Assert.True(bevoegdgezagen.Count > 0);
+            var regioApi = new RegiosApi();
+            regioApi.BaseUrl = "http://wingis.geodan.nl/regios/api/";
+            var result = regioApi.GetBevoegdgezag("POINT(208501.1 603036.6)");
+            Assert.True(result.Count > 0);
         }
     }
 }

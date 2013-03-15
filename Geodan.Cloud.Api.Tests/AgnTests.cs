@@ -9,40 +9,37 @@ namespace Geodan.Cloud.Api.Tests
         [Fact]
         public void GetAdresById()
         {
-            AgnApi.GetAdres("0003010000125985", callback);
+            var agnApi = new AgnApi();
+            agnApi.BaseUrl = "http://wingis.geodan.nl/agn/api/";
+            var result = agnApi.GetAdres("0003010000125985");
+            Assert.True(result != null);
         }
 
         [Fact]
         public void GetGebouwenByPostcode()
         {
-            AgnApi.GetGebouwen("3583", callback);
+            var agnApi = new AgnApi();
+            agnApi.BaseUrl = "http://wingis.geodan.nl/agn/api/";
+            var result = agnApi.GetGebouwenByPc6("3583es");
+            Assert.True(result.Count > 0);
         }
 
         [Fact]
         public void GetGebouwenByStraatGemeente()
         {
-            AgnApi.GetGebouwen("Parkstraat","Utrecht",callback);
+            var agnApi = new AgnApi();
+            agnApi.BaseUrl = "http://wingis.geodan.nl/agn/api/";
+            var result = agnApi.GetGebouwen("Parkstraat", "Utrecht");
+            Assert.True(result.Count > 0);
         }
 
         [Fact]
         public void GetAdressenByStraatGemeente()
         {
-            AgnApi.GetAdressen("Parkstraat", "Utrecht", callback);
-        }
-
-        private static void callback(List<Gebouw> gebouwen)
-        {
-            Assert.True(gebouwen.Count >0 );
-        }
-
-        private static void callback(Adres adres)
-        {
-            Assert.True(adres != null);
-        }
-
-        private static void callback(List<Adres> adressen)
-        {
-            Assert.True(adressen.Count > 0);
+            var agnApi = new AgnApi();
+            agnApi.BaseUrl = "http://wingis.geodan.nl/agn/api/";
+            var result = agnApi.GetAdressen("Parkstraat", "Utrecht");
+            Assert.True(result.Count > 0);
         }
     }
 }

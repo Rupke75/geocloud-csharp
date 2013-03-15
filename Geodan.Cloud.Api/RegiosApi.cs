@@ -1,36 +1,42 @@
 ﻿using System;
 using System.Collections.Generic;
 using Geodan.Cloud.Models.Agn;
-using RestSharp;
+using System.Net.Http;
+using System.Runtime.Serialization.Json;
 
 namespace Geodan.Cloud.Api
 {
     public class RegiosApi
     {
-        public static string BaseUrl = "http://wingis/regios/api";
-        public static string UserId = string.Empty;
+        public string BaseUrl = "http://wingis/regios/api";
+        public string UserId = string.Empty;
 
-        static readonly RestClient Client = new RestClient(BaseUrl);
-
-        public static void GetBevoegdgezag(double lon, double lat, Action<List<Bevoegdgezag>> callback)
+        public List<Bevoegdgezag> GetBevoegdgezag(double lon, double lat)
         {
-            var request = new RestRequest("bevoegdgezag");
-            request.AddParameter("lon", lon);
-            request.AddParameter("lat", lat);
-            if (!string.IsNullOrEmpty(UserId)) request.AddParameter("uid", UserId); 
-            Client.ExecuteAsync<List<Bevoegdgezag>>(request, response => callback(response.Data));
+            var client = new HttpClient();
+            client.BaseAddress = new Uri(BaseUrl);
+            var url = "bevoegdgezag?lon=" + lon + "&lat=" + lat;
+            if (!string.IsNullOrEmpty(UserId)) url += "&uid" + UserId;
+
+            var response = client.GetAsync(url).Result;
+            var bevoegdgezagStream = response.Content.ReadAsStreamAsync().Result;
+            var serializer = new DataContractJsonSerializer(typeof(List<Bevoegdgezag>));
+            var bevoegdgezag = (List<Bevoegdgezag>)serializer.ReadObject(bevoegdgezagStream);
+            return bevoegdgezag;
         }
 
-        public static void GetBevoegdgezag(string wktRd, Action<List<Bevoegdgezag>> callback)
+        public List<Bevoegdgezag> GetBevoegdgezag(string wktRd)
         {
-            var request = new RestRequest("bevoegdgezag");
-            request.AddParameter("wkt", wktRd);
-            if (!string.IsNullOrEmpty(UserId)) request.AddParameter("uid", UserId); 
-            Client.ExecuteAsync<List<Bevoegdgezag>>(request, response => callback(response.Data));
+            var client = new HttpClient();
+            client.BaseAddress = new Uri(BaseUrl);
+            var url = "bevoegdgezag?wkt=" + wktRd ;
+            if (!string.IsNullOrEmpty(UserId)) url += "&uid" + UserId;
+
+            var response = client.GetAsync(url).Result;
+            var bevoegdgezagStream = response.Content.ReadAsStreamAsync().Result;
+            var serializer = new DataContractJsonSerializer(typeof(List<Bevoegdgezag>));
+            var bevoegdgezag = (List<Bevoegdgezag>)serializer.ReadObject(bevoegdgezagStream);
+            return bevoegdgezag;
         }
-
-
-
-
     }
 }
