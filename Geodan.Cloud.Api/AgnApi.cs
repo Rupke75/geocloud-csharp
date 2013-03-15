@@ -9,7 +9,7 @@ namespace Geodan.Cloud.Api
 {
     public class AgnApi
     {
-        public string BaseUrl = "http://wingis.geodan.nl/agn/api";
+        public string BaseUrl = "http://wingis.geodan.nl/agn/api/";
         public string UserId = string.Empty;
 
         public List<Gebouw> GetGebouwenByWkt(string wkt)
