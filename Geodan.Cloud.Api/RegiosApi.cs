@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Geodan.Cloud.Models.Agn;
 using System.Net.Http;
 using System.Runtime.Serialization.Json;
+using System.Globalization;
 
 namespace Geodan.Cloud.Api
 {
@@ -15,7 +16,7 @@ namespace Geodan.Cloud.Api
         {
             var client = new HttpClient();
             client.BaseAddress = new Uri(BaseUrl);
-            var url = "bevoegdgezag?lon=" + lon + "&lat=" + lat;
+            var url = String.Format(CultureInfo.InvariantCulture, "bevoegdgezag?lon={0}&lat={1}",lon,lat);
             if (!string.IsNullOrEmpty(UserId)) url += "&uid" + UserId;
 
             var response = client.GetAsync(url).Result;
