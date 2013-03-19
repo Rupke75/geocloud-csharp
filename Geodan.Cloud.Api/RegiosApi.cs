@@ -9,8 +9,18 @@ namespace Geodan.Cloud.Api
 {
     public class RegiosApi
     {
-        public string BaseUrl = "http://wingis/regios/api";
+        public string DevBaseUrl = "http://wingis.geodan.nl/regios/api";
+        public string BaseUrl = "http://services.geodan.nl/beta/api";
         public string UserId = string.Empty;
+
+        public RegiosApi()
+        {
+        }
+
+        public RegiosApi(bool UseDevEnvironment)
+        {
+            this.BaseUrl = DevBaseUrl;
+        }
 
         public List<Bevoegdgezag> GetBevoegdgezag(double lon, double lat)
         {

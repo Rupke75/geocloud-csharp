@@ -9,7 +9,7 @@ namespace Geodan.Cloud.Api
 {
     public class LocationsApi
     {
-        public string BaseUrl = "http://wingis/location/api";
+        public string BaseUrl = "http://wingis.geodan.nl/location/api";
         public string UserId = string.Empty;
 
         public List<Position> GetLocations(string username)
