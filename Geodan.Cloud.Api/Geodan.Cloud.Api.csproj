@@ -36,14 +36,12 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="AgnApi.cs" />
+    <Compile Include="GeoCoderApi.cs" />
     <Compile Include="LocationsApi.cs" />
     <Compile Include="RegiosApi.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="Geodan.Cloud.Models">
-      <HintPath>..\packages\Geodan.Cloud.Models.1.0.4\lib\Geodan.Cloud.Models.dll</HintPath>
-    </Reference>
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\packages\Newtonsoft.Json.4.5.11\lib\portable-net40+sl4+wp7+win8\Newtonsoft.Json.dll</HintPath>
     </Reference>
@@ -66,6 +64,12 @@
   <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Geodan.Cloud.Models\Geodan.Cloud.Models.csproj">
+      <Project>{001e9553-6d9e-4766-8c11-3a1d19e8e549}</Project>
+      <Name>Geodan.Cloud.Models</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\nuget.targets" />
